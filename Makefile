@@ -1,25 +1,21 @@
 .PHONY: teardown stop start
 
 teardown:
-	@kubectl delete all --all -n kafka
-	@kubectl delete namespace kafka
-	@minikube stop
+	@kubectl delete all --all -n kafka;
+	@kubectl delete namespace kafka;
+	@minikube stop;
 
 stop:
-	@minikube stop
+	@minikube stop;
 
 start:
 	@minikube start;
-	@echo "Waiting for MINIKUBE_IP to be available..."
-	@while [ -z "$$MINIKUBE_IP" ]; do \
-		export MINIKUBE_IP=$$(minikube ip); \
-		if [ -n "$$MINIKUBE_IP" ]; then \
-			echo "MINIKUBE_IP is now set to $$MINIKUBE_IP"; \
-		else \
-			echo "MINIKUBE_IP is not set yet. Waiting for minikube to start..."; \
-			sleep 5; \
-		fi; \
-	done	
-	@kubectl apply -f namespace/namespace.yaml
-	@kubectl apply -f zookeeper/zookeeper.yaml
-	@envsubst < kafka/kafka.yaml | kubectl apply -f -
+	@echo "Waiting for MINIKUBE_IP to be available...";
+	@while ! minikube ip > /dev/null 2>&1; do \
+		echo "Minikube is not ready yet. Waiting..."; \
+		sleep 5; \
+	done; \
+	echo "Minikube is ready.";
+	@kubectl apply -f namespace/namespace.yaml;
+	@kubectl apply -f zookeeper/zookeeper.yaml;
+	@MINIKUBE_IP=$$(minikube ip) envsubst < kafka/kafka.yaml | kubectl apply -f -;

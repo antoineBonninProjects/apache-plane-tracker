@@ -35,9 +35,9 @@ We set kafka up in a way that it is reacheable on $(minicube ip):30092
 ```sh
 # Terminal 1 - Producer
 echo "hello world!" | kafkacat -P -b $(minikube ip):30092 -t test
+```
 
-
+```sh
 # Terminal 2 - Consumer
 kafkacat -C -b $(minikube ip):30092 -t test
-
 ```
