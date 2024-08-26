@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: opensky-puller-cronjob
+  namespace: apache-plane-tracker
+spec:
+  schedule: "*/2 * * * *"  # Runs every 2mn
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: opensky-puller
+            image: abonnin33/opensky-puller:latest
+          restartPolicy: OnFailure

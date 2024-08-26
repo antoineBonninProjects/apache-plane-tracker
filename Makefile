@@ -19,3 +19,4 @@ start:
 	@kubectl apply -f namespace/namespace.yaml;
 	@kubectl apply -f zookeeper/zookeeper.yaml;
 	@MINIKUBE_IP=$$(minikube ip) envsubst < kafka/kafka.yaml | kubectl apply -f -;
+	@kubectl apply -f cronjobs/opensky_puller.yaml
