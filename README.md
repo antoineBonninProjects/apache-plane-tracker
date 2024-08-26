@@ -41,6 +41,13 @@ echo "hello world!" | kafkacat -P -b $(minikube ip):30092 -t test
 # Terminal 2 - Consumer
 kafkacat -C -b $(minikube ip):30092 -t test
 ```
+## Dependencies
+
+### opensky-puller
+The code to periodically fech data from opensky API is in [another repo of mine](https://github.com/antoineBonninProjects/opensky-puller)
+
+The docker image containing this Java app is [the following](https://hub.docker.com/repository/docker/abonnin33/opensky-puller/general).
+Having a container image is key to create a Kubernetes CronJob to periodically fetch this data.
 
 # Next steps
 
