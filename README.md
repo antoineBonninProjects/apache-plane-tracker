@@ -51,8 +51,6 @@ Having a container image is key to create a Kubernetes CronJob to periodically f
 
 # Next steps
 
-* automate docker login + Makefile inside opensky_puller to push docker image
-* move opensky_puller to a dedicated repo
 * setup env variables to configure the opensky_puller:
   * lat / long zone to scan
   * kafka broker and port
