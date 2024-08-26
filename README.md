@@ -41,3 +41,13 @@ echo "hello world!" | kafkacat -P -b $(minikube ip):30092 -t test
 # Terminal 2 - Consumer
 kafkacat -C -b $(minikube ip):30092 -t test
 ```
+
+# Next steps
+
+* automate docker login + Makefile inside opensky_puller to push docker image
+* move opensky_puller to a dedicated repo
+* setup env variables to configure the opensky_puller:
+  * lat / long zone to scan
+  * kafka broker and port
+* setup a switch logic to use opensky_puller in standalone mode to display aircraft states without sending it to kafka
+* junit testing on opensky_puller
