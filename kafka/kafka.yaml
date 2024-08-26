@@ -4,7 +4,7 @@ metadata:
   labels:
     app: kafka-broker
   name: kafka-service
-  namespace: kafka
+  namespace: apache-plane-tracker
 spec:
   type: NodePort
   ports:
@@ -21,7 +21,7 @@ metadata:
   labels:
     app: kafka-broker
   name: kafka-broker
-  namespace: kafka
+  namespace: apache-plane-tracker
 spec:
   replicas: 1
   selector:
