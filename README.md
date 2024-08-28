@@ -51,6 +51,7 @@ echo "hello world!" | kafkacat -P -b $(minikube ip):30092 -t test
 ```sh
 # Terminal 2 - Consumer
 kafkacat -C -b $(minikube ip):30092 -t test
+kafkacat -C -b $(minikube ip):30092 -t aircraft-states # To read the aircraft-states published by opensky-kafka-publisher-cronjob
 ```
 ## Dependencies
 
@@ -63,4 +64,3 @@ Having a container image is key to create a Kubernetes CronJob to periodically f
 # Next steps
 
 * junit testing on opensky_kafka_publisher
-* rename opensky-puller to 
