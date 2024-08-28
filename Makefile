@@ -1,6 +1,4 @@
-.PHONY: teardown stop start update
-
-export $(shell cat .envrc | xargs)
+.PHONY: teardown stop start apply
 
 teardown:
 	@kubectl delete all --all -n apache-plane-tracker;
@@ -19,7 +17,7 @@ start:
 	echo "Minikube is ready.";
 	@$(MAKE) update;
 
-update:
+apply:
 	@kubectl apply -f namespace/namespace.yaml;
 	@kubectl apply -f zookeeper/zookeeper.yaml;
 	@MINIKUBE_IP=$$(minikube ip) envsubst < kafka/kafka.yaml | kubectl apply -f -;
