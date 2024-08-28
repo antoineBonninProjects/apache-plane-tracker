@@ -12,6 +12,7 @@ Install the following dependencies based on your distribution:
 * kubectl (may come with minikube)
 * docker (or other container solution)
 * kafkacat
+* [helm](https://helm.sh/docs/intro/install/)
 
 ## Stack lifecycle
 
@@ -29,14 +30,18 @@ Then, edit the environment variables defined in the *.envrc*:
 The stack is meant to be run/stopped via the Makefile
 
 ```sh
-# start the stack
+# start minikube + the full k8s stack
 make start
 
-# stop the stack
+# deploy changes to the k8s stack, without restarting minikube
+make apply
+
+# reset to a clean k8s state without this stack
+make teardown
+
+# stop minikube
 make stop
 
-# teardown if you want to reset to a clean k8y state without this project
-make teardown
 ```
 
 Once the stack is started and the service kafka is Running, you can test it via kafkacat commands.
@@ -56,11 +61,19 @@ kafkacat -C -b $(minikube ip):30092 -t aircraft-states # To read the aircraft-st
 ## Dependencies
 
 ### opensky-kafka-publisher
-The code to periodically fech data from opensky API is in [another repo of mine](https://github.com/antoineBonninProjects/opensky-kafka-publisher)
+The code to periodically fech data from opensky API is in my [opensky-kafka-publisher](https://github.com/antoineBonninProjects/opensky-kafka-publisher) repo.
 
 The docker image containing this Java app is [the following](https://hub.docker.com/repository/docker/abonnin33/opensky-kafka-publisher/general).
-Having a container image is key to create a Kubernetes CronJob to periodically fetch this data.
+Having a container image is key to create a Kubernetes CronJob.
+
+### aircraft-stream-analytics
+The code of my spark Streaming job to compute simple aircraft stats and alerts is in my [opensky-kafka-publisher](https://github.com/antoineBonninProjects/opensky-kafka-publisher) repo. It consumes data produced by *opensky-kafka-publisher* on kafka.
+
+The docker image containing this Scala job is [the following](https://hub.docker.com/repository/docker/abonnin33/aircraft-stream-analytics/general).
+Having a container image is key to create a Kubernetes SparkApplication.
 
 # Next steps
 
-* junit testing on opensky_kafka_publisher
+* create the streaming spark job that consumes kafka and pushes into HDFS
+* add logic inside the streaming spark job to compute the distance from previous state for each plane in this area
+* send an alert if plane have not emitted a state for more than 1 hour

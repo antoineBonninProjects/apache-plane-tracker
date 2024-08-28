@@ -1,0 +1,33 @@
+apiVersion: sparkoperator.k8s.io/v1beta2
+kind: SparkApplication
+metadata:
+  name: aircraft-stream-analytics
+  namespace: apache-plane-tracker
+spec:
+  type: Scala
+  mode: cluster
+  image: abonnin33/aircraft-stream-analytics:latest
+  imagePullPolicy: Always
+  mainClass: com.opensky.jobs.streaming.AircraftStreamAnalytics
+  mainApplicationFile: "local:///opt/spark/jars/aircraft-stream-analytics-1.0-jar-with-dependencies.jar"
+  sparkVersion: "3.5.2"
+  restartPolicy:
+    type: Never
+  #batchScheduler: "volcano" # Comment if no volcano scheduling
+  sparkConf:
+    "spark.sql.streaming.checkpointLocation": "/tmp/spark-checkpoints"
+    "spark.executor.instances": "2"
+    "spark.kubernetes.container.image.pullSecrets": "regcred"
+  driver:
+    cores: 1
+    memory: "512m"
+    serviceAccount: spark-operator
+    labels:
+      version: 3.5.2
+  executor:
+    cores: 1
+    instances: 2
+    memory: "512m"
+    serviceAccount: spark-operator
+    labels:
+      version: 3.5.2
