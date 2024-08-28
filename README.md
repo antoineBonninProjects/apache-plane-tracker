@@ -54,13 +54,13 @@ kafkacat -C -b $(minikube ip):30092 -t test
 ```
 ## Dependencies
 
-### opensky-puller
-The code to periodically fech data from opensky API is in [another repo of mine](https://github.com/antoineBonninProjects/opensky-puller)
+### opensky-kafka-publisher
+The code to periodically fech data from opensky API is in [another repo of mine](https://github.com/antoineBonninProjects/opensky-kafka-publisher)
 
-The docker image containing this Java app is [the following](https://hub.docker.com/repository/docker/abonnin33/opensky-puller/general).
+The docker image containing this Java app is [the following](https://hub.docker.com/repository/docker/abonnin33/opensky-kafka-publisher/general).
 Having a container image is key to create a Kubernetes CronJob to periodically fetch this data.
 
 # Next steps
 
-* junit testing on opensky_puller
-* rename opensky-puller to kafka-opensky-publisher
+* junit testing on opensky_kafka_publisher
+* rename opensky-puller to 

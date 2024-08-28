@@ -5,7 +5,6 @@ export $(shell cat .envrc | xargs)
 teardown:
 	@kubectl delete all --all -n apache-plane-tracker;
 	@kubectl delete namespace apache-plane-tracker;
-	@minikube stop;
 
 stop:
 	@minikube stop;
@@ -24,4 +23,4 @@ update:
 	@kubectl apply -f namespace/namespace.yaml;
 	@kubectl apply -f zookeeper/zookeeper.yaml;
 	@MINIKUBE_IP=$$(minikube ip) envsubst < kafka/kafka.yaml | kubectl apply -f -;
-	/bin/bash -c 'set -a; source .envrc; set +a; envsubst < cronjobs/opensky_puller.yaml | kubectl apply -f -'
+	@/bin/bash -c 'set -a; source .envrc; set +a; envsubst < cronjobs/opensky_kafka_publisher.yaml | kubectl apply -f -'

@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: opensky-puller-cronjob
+  name: opensky-kafka-publisher-cronjob
   namespace: apache-plane-tracker
 spec:
   schedule: "*/2 * * * *"  # Runs every 2mn
@@ -10,8 +10,8 @@ spec:
       template:
         spec:
           containers:
-          - name: opensky-puller
-            image: abonnin33/opensky-puller:latest
+          - name: opensky-kafka-publisher
+            image: abonnin33/opensky-kafka-publisher:latest
             env:
             - name: IS_DRY_RUN
               value: "${IS_DRY_RUN}"
