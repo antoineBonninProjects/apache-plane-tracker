@@ -26,7 +26,7 @@ spec:
       version: 3.5.2
   executor:
     cores: 1
-    instances: 2
+    instances: 1
     memory: "512m"
     serviceAccount: spark-operator
     labels:

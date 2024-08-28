@@ -29,8 +29,7 @@ apply:
 	@echo "apply the K8s stack..."
 	@kubectl apply -f zookeeper/zookeeper.yaml;
 	@MINIKUBE_IP=$$(minikube ip) envsubst < kafka/kafka.yaml | kubectl apply -f -;
-	#@/bin/bash -c 'set -a; source .envrc; set +a; envsubst < cronjobs/opensky_kafka_publisher.yaml | kubectl apply -f -';
+	@/bin/bash -c 'set -a; source .envrc; set +a; envsubst < cronjobs/opensky_kafka_publisher.yaml | kubectl apply -f -';
 	@kubectl apply -f spark/spark-serviceaccount.yaml;
 	@kubectl apply -f spark/spark-rolebinding.yaml;
-	@kubectl apply -f spark/spark-role.yaml
 	@kubectl apply -f spark/aircraft_stream_analytics.yaml;
