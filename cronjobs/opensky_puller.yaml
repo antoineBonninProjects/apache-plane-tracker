@@ -12,4 +12,19 @@ spec:
           containers:
           - name: opensky-puller
             image: abonnin33/opensky-puller:latest
+            env:
+            - name: IS_DRY_RUN
+              value: "${IS_DRY_RUN}"
+            - name: KAFKA_BROKER
+              value: "${KAFKA_BROKER}"
+            - name: KAFKA_TOPIC
+              value: "${KAFKA_TOPIC}"
+            - name: LATITUDE_MIN
+              value: "${LATITUDE_MIN}"
+            - name: LATITUDE_MAX
+              value: "${LATITUDE_MAX}"
+            - name: LONGITUDE_MIN
+              value: "${LONGITUDE_MIN}"
+            - name: LONGITUDE_MAX
+              value: "${LONGITUDE_MAX}"
           restartPolicy: OnFailure

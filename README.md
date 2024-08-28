@@ -15,6 +15,17 @@ Install the following dependencies based on your distribution:
 
 ## Stack lifecycle
 
+Before starting the stack, please copy the *.envrc.tpl* to a file named *.envrc*:
+```sh
+cp .envrc.tpl .envrc
+```
+
+Then, edit the environment variables defined in the *.envrc*:
+- IS_DRY_RUN: set it to **true** if you do not want the cronJobs to publish to Kafka
+- KAFKA_BROKER: default to kafka-service:9092 (our stack kafka broker service)
+- KAFKA_TOPIC: kafka topic for openSky cronJob to publish aircraft states
+- LATITUDE_MIN / LATITUDE_MAX / LONGITUDE_MIN / LONGITUDE_MAX: coordinates representing the zone to scan for aricrafts
+
 The stack is meant to be run/stopped via the Makefile
 
 ```sh
@@ -51,8 +62,5 @@ Having a container image is key to create a Kubernetes CronJob to periodically f
 
 # Next steps
 
-* setup env variables to configure the opensky_puller:
-  * lat / long zone to scan
-  * kafka broker and port
-* setup a switch logic to use opensky_puller in standalone mode to display aircraft states without sending it to kafka
 * junit testing on opensky_puller
+* rename opensky-puller to kafka-opensky-publisher
